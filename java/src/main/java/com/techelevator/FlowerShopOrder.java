@@ -1,0 +1,48 @@
+package com.techelevator;
+
+public class FlowerShopOrder {
+	
+	private String bouquetType;
+	private int numberOfRoses;
+	private double subtotal; // order subtotal before shipping by adding $19.99 for the standard bouquet plus $2.99 for each rose
+	
+	public FlowerShopOrder(String bouquetType, int numberOfRoses) {
+		this.setBouquetType(bouquetType);
+		this.setNumberOfRoses(numberOfRoses);
+	}
+	
+	public double calculateSubtotal(int numberOfRoses) {
+		double standardBouquet = 19.99;
+		double subtotal = 0;
+		if(numberOfRoses > 0) {
+			subtotal = standardBouquet + (numberOfRoses * 2.99);
+		} else {
+			subtotal = 19.99;
+		}
+		return subtotal;
+	}
+
+	public String getBouquetType() {
+		return bouquetType;
+	}
+
+	public void setBouquetType(String bouquetType) {
+		this.bouquetType = bouquetType;
+	}
+
+	public int getNumberOfRoses() {
+		return numberOfRoses;
+	}
+
+	public void setNumberOfRoses(int numberOfRoses) {
+		this.numberOfRoses = numberOfRoses;
+	}
+
+	public double getSubtotal() {
+		return subtotal;
+	}
+
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
+	} 
+}
