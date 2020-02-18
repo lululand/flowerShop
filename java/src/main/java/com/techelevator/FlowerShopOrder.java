@@ -6,22 +6,23 @@ public class FlowerShopOrder {
 	private int numberOfRoses;
 	private double subtotal; // order subtotal before shipping by adding $19.99 for the standard bouquet plus $2.99 for each rose
 	
-	public FlowerShopOrder(String bouquetType, int numberOfRosesnumberOfRoses) {
+	public FlowerShopOrder(String bouquetType, int numberOfRoses) {
 		this.setBouquetType(bouquetType);
 		this.setNumberOfRoses(numberOfRoses);
 	}
 	
-//	public FlowerShopOrder() {
-//		// TODO Auto-generated constructor stub
-//	}
+	public FlowerShopOrder() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public double calculateSubtotal(int numberOfRoses) {
 		double standardBouquet = 19.99;
 		double subtotal = 0;
-		if(numberOfRoses > 0) {
-			subtotal = standardBouquet + (numberOfRoses * 2.99);
-		} else {
+		if(numberOfRoses == 0) {
 			subtotal = 19.99;
+		}
+		else if(numberOfRoses > 0) {
+			subtotal = standardBouquet + (numberOfRoses * 2.99);
 		}
 		return subtotal;
 	}
