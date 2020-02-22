@@ -15,88 +15,58 @@ public class Module1CodingAssessment {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-		FlowerShopOrder orderOne = new FlowerShopOrder("Basic", 12);
-		System.out.println("ORDER - " + orderOne.getBouquetType() + " - " + orderOne.getNumberOfRoses() + " roses - "
-				+ orderOne.calculateSubtotal(orderOne.getNumberOfRoses()) + "\n");
-
-//		List<FlowerShopOrder> flowerShopOrdersList = new ArrayList<>();
-//		FlowerShopOrder(flowerShopOrders.getBouquetType(), flowerShopOrders.getNumberOfRoses());
+//		FlowerShopOrder orderOne = new FlowerShopOrder("Basic", 12);
+//		System.out.println("ORDER - " + orderOne.getBouquetType() + " - " + orderOne.getNumberOfRoses() + " roses - "
+//				+ orderOne.calculateSubtotal(orderOne.getNumberOfRoses()) + "\n");
 
 		List<String> stringList = new ArrayList<String>();
 		List<FlowerShopOrder> flowerOrderList = new ArrayList<FlowerShopOrder>(stringList.size());
 		File inputFile = new File("data-files/FlowerInput.csv");
 
 		if (inputFile.exists()) {
-			try (Scanner inputScanner = new Scanner(inputFile.getAbsoluteFile())) {
-				while (inputScanner.hasNext()) {
-					String lineInput = inputScanner.nextLine();
+			try (Scanner scanner = new Scanner(inputFile.getAbsoluteFile())) {
+				while (scanner.hasNext()) {
+					String lineInput = scanner.nextLine();
 					// put each line into an array
-					String[] eachLineArray = lineInput.split("\\n"); // it's not splitting by line? 
-					
-//					System.out.println(lineInput + "\r");
-//					System.out.println(eachLineArray[0]);
-//					eachLineArray.split("\r");
-//					System.out.println(Arrays.toString(eachLineArray)); // this makes it look like it is split
-//					System.out.println(Arrays.deepToString(eachLineArray));
-//					System.out.println(eachLineArray.length); 
-//					System.out.println(eachLineArray[0]); // 
-//					System.out.println(eachLineArray[1]); //  this is out of bounds
+					String[] thisLineArr = lineInput.split(","); 
 
-					// add each string at eachLineArray[i] into an array list
-					for (String string : eachLineArray) {
-						stringList.add(string);
-						
-						// take each string ("Basic,0") in the array list, split it and convert the new
-						// index[1]
-						// to an int to use in 2nd parameter for object list
-						for (String order : stringList) {
-							String temp = order;
-							String[] tempSplit = temp.split(","); // split it by the comma to be ["Elite", "12"]
-							int tempNum = Integer.parseInt(tempSplit[1]); // turn the number-string into an int for the
-																			// bouquetType
-							// *** create a new object for each index-item of stringList
-//							FlowerShopOrder tempObject = new FlowerShopOrder(tempSplit[0], tempNum); 
-							// add each new object to the object list
-							flowerOrderList.add(new FlowerShopOrder(tempSplit[0], tempNum));
-						}
-					}
+					String type = thisLineArr[0];
+					int numOfFlowers = Integer.parseInt(thisLineArr[1]);
+
+					FlowerShopOrder thisOrder = new FlowerShopOrder(type, numOfFlowers);
+//					System.out.println(thisOrder.toString());
+//					System.out.println("********");
+					
+					flowerOrderList.add(thisOrder);
 				}
-//				System.out.println(orderList.get(0).getBouquetType() + " - " + orderList.get(0).getNumberOfRoses());
-//				System.out.println(orderList.get(0).calculateSubtotal(orderList.get(0).getNumberOfRoses()));
-//				System.out.println(calculateAllOrdersSubtotal(flowerOrderList));
+				
+				for(int i = 0; i < flowerOrderList.size(); i++) {
+				System.out.println("ORDER - bouquet type: " + flowerOrderList.get(i).getBouquetType() + " with " 
+						+ flowerOrderList.get(i).getNumberOfRoses() + " roses - subtotal: $" 
+						+ flowerOrderList.get(i).calculateSubtotal(flowerOrderList.get(i).getNumberOfRoses()));
 				}
+				
+				System.out.println("********************************");
+				
+				System.out.println("The grand total for all of the flower orders is: $" 
+				+ calculateAllOrdersSubtotal(flowerOrderList));
+				
+				scanner.close();
+
+			}  catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-//		
-//		System.out.println(flowerOrderList.get(0).getBouquetType() + " bouquet with " + flowerOrderList.get(0).getNumberOfRoses() + " roses = " + flowerOrderList.get(0).calculateSubtotal(flowerOrderList.get(0).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(1).getBouquetType() + " bouquet with " + flowerOrderList.get(1).getNumberOfRoses() + " roses = " + flowerOrderList.get(1).calculateSubtotal(flowerOrderList.get(1).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(2).getBouquetType() + " bouquet with " + flowerOrderList.get(2).getNumberOfRoses() + " roses = " + flowerOrderList.get(2).calculateSubtotal(flowerOrderList.get(2).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(3).getBouquetType() + " bouquet with " + flowerOrderList.get(3).getNumberOfRoses() + " roses = " + flowerOrderList.get(3).calculateSubtotal(flowerOrderList.get(3).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(4).getBouquetType() + " bouquet with " + flowerOrderList.get(4).getNumberOfRoses() + " roses = " + flowerOrderList.get(4).calculateSubtotal(flowerOrderList.get(4).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(5).getBouquetType() + " bouquet with " + flowerOrderList.get(5).getNumberOfRoses() + " roses = " + flowerOrderList.get(5).calculateSubtotal(flowerOrderList.get(5).getNumberOfRoses()));
-//		System.out.println(flowerOrderList.get(6).getBouquetType() + " bouquet with " + flowerOrderList.get(6).getNumberOfRoses() + " roses = " + flowerOrderList.get(6).calculateSubtotal(flowerOrderList.get(6).getNumberOfRoses()));
-//	
 	}
 
 	public static double calculateAllOrdersSubtotal(List<FlowerShopOrder> orderList) {
-		// testing
-		double subtotal0 = orderList.get(0).calculateSubtotal(orderList.get(0).getNumberOfRoses());
-		double subtotal1 = orderList.get(1).calculateSubtotal(orderList.get(1).getNumberOfRoses());
-		double subtotal2 = orderList.get(2).calculateSubtotal(orderList.get(2).getNumberOfRoses());
-		double subtotal3 = orderList.get(3).calculateSubtotal(orderList.get(3).getNumberOfRoses());
-		double subtotal4 = orderList.get(4).calculateSubtotal(orderList.get(4).getNumberOfRoses());
-		double subtotal5 = orderList.get(5).calculateSubtotal(orderList.get(5).getNumberOfRoses());
-		
-		// get the subtotal of each Order in the list.
-//		for (int i = 0; i < ordersList.size(); i++) {
-//			System.out.println(ordersList.get(i).calculateSubtotal(ordersList.get(i).getNumberOfRoses()));
-//		}
-//		
-//		for (int i = 0; i < ordersList.size(); i++) {
-//			double sum = +ordersList.get(i).calculateSubtotal(ordersList.get(i).getNumberOfRoses());
-////			double sum =+ tempSubtotal;
-////		    System.out.println(orderList.get(0).calculateSubtotal(orderList.get(0).getNumberOfRoses()));
-//		}
-		double subtotalsTotal = subtotal0 + subtotal1 + subtotal2 + subtotal3 + subtotal4 + subtotal5; 
+		int sizeNum = orderList.size();
+		double subtotalsTotal = 0;
+//		get the subtotal of each Order in the list and add them together.
+		for (int i = 0; i < sizeNum; i++) {
+			double eachSubtotal = orderList.get(i).calculateSubtotal(orderList.get(i).getNumberOfRoses());
+			subtotalsTotal += eachSubtotal;
+		}
 		return subtotalsTotal;
 	}
 

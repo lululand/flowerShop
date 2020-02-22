@@ -12,7 +12,7 @@ public class FlowerShopOrder {
 	}
 	
 	public FlowerShopOrder() {
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub 
 	}
 
 	public double calculateSubtotal(int numberOfRoses) {
@@ -25,6 +25,11 @@ public class FlowerShopOrder {
 			subtotal = standardBouquet + (numberOfRoses * 2.99);
 		}
 		return subtotal;
+	}
+	
+	@Override
+	public String toString() {
+		return "Order [type=" + bouquetType + ", numberOfRoses=" + numberOfRoses + "]";
 	}
 
 	public String getBouquetType() {
